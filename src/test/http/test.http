@@ -1,0 +1,116 @@
+### Send POST1
+POST http://localhost:8080/company
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiXSwic3ViIjoiZ3JhY2UiLCJpYXQiOjE3MTIyMjEzOTYsImV4cCI6MTcxMjIyNDk5Nn0.5p38oI-NS0MziAxFMW1v-gJPeghf25gweo2eSuyzmEtzVHaaHtDnBJY0GHzYYMweRoG4iVuQnn8l1oPZvULVjA
+Content-Type: application/json
+
+{
+  "ticker": "MMM"
+}
+
+### Send POST1 Admin
+POST http://localhost:8080/company
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiLCJST0xFX1dSSVRFIl0sInN1YiI6ImpvaG4iLCJpYXQiOjE3MTIyODU1NjMsImV4cCI6MTcxMjI4OTE2M30.w2bnYGBPASWiqOxGsD_9hoNPBIeYzHVvQf87r9WhIx6i71xec2ll7PwRB-dikmyuahX444oc3vuG_0OG7gkzog
+Content-Type: application/json
+
+{
+  "ticker": "MMM"
+}
+
+### Send POST2
+POST http://localhost:8080/company/multiple
+Content-Type: application/json
+
+[
+  {
+    "ticker": "QQQ"
+  },
+  {
+    "ticker": "NKE"
+  },
+  {
+    "ticker": "SPY"
+  },
+  {
+    "ticker": "T"
+  },
+  {
+    "ticker": "IBM"
+  },
+  {
+    "ticker": "INTC"
+  },
+  {
+    "ticker": "AAPL"
+  },
+  {
+    "ticker": "CGON"
+  },
+  {
+    "ticker": "DV"
+  }
+]
+
+### Send GET page
+GET http://localhost:8080/company?size=5&page=0
+
+### Send GET Dividend
+GET http://localhost:8080/finance/dividend/3M c
+
+
+### Send GET Keyword
+GET http://localhost:8080/company/autocomplete?keyword
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiXSwic3ViIjoiZ3JhY2UiLCJpYXQiOjE3MTIyMTk1NTUsImV4cCI6MTcxMjIyMzE1NX0.BIdxGbrLV-NRIuGMapAyoHqBMVmaEktqjpqFFj2tzSVKoM4SnHa_xCdR9plhO0AuVur51xenCO-G1wYTgF9Vzg
+
+### Sign Up
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "username": "grace",
+  "password": "grace123!@#",
+  "roles": ["ROLE_READ"]
+}
+
+### Sign Up Admin
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "john123!@#",
+  "roles": ["ROLE_READ", "ROLE_WRITE"]
+}
+
+### Sign In
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "username": "grace",
+  "password": "grace123!@#"
+}
+
+### Sign In Admin
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "john123!@#"
+}
+
+### Send GET with token
+GET http://localhost:8080/company?size=5&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiXSwic3ViIjoiZ3JhY2UiLCJpYXQiOjE3MTIyMjI2NDEsImV4cCI6MTcxMjIyNjI0MX0.8cbDRahnSmFdwka0fqk9JXGGNkQ1cGzlKCAr6vKzah45sdF3asYDKCwdUGopbkIPi8AZu_rZSuzqNubpyaBmQA
+
+### Send GET with token Admin
+GET http://localhost:8080/company?size=5&page=0
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiLCJST0xFX1dSSVRFIl0sInN1YiI6ImpvaG4iLCJpYXQiOjE3MTIyMjE0NTgsImV4cCI6MTcxMjIyNTA1OH0.BuL7hEOYC1wPrYcwKbRABzxId7EelBXFop47H6PZSgI3SSQ-vU17693LZgEaAPjWN18QWP5qUsaNK6UXwTIvmQ
+
+### Send DELETE with token
+DELETE http://localhost:8080/company/MMM
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiXSwic3ViIjoiZ3JhY2UiLCJpYXQiOjE3MTIyMjE1MDQsImV4cCI6MTcxMjIyNTEwNH0.yNB6K4qsAQ2pE7A6TCWwKRMoIzM0Z5Ll7KRG5IQbmnicuMXyDuYYYjFgWejHzfwdmR2dJKszhMT7LZjAZ11fUw
+
+### Send DELETE with token Admin
+DELETE http://localhost:8080/company/MMM
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1JFQUQiLCJST0xFX1dSSVRFIl0sInN1YiI6ImpvaG4iLCJpYXQiOjE3MTIyMTk1NzMsImV4cCI6MTcxMjIyMzE3M30.pkXrTz95m-sxBLrnZ-i6IQgvBohYjF5uxBBtaOFbw2nrrt2ThSA9734ptaqwyv6fu3ZJq9T0vdW1wTmRk8MGsA
