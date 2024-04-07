@@ -1,6 +1,7 @@
 package zerobase.dividend.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/company")
 @RestController
+@Slf4j
 public class CompanyController {
     private final CompanyService companyService;
     private final CacheManager redisCacheManager;
@@ -68,6 +70,7 @@ public class CompanyController {
     @PostMapping
     @PreAuthorize("hasRole('WRITE')")
     public ResponseEntity<?> addCompany(@RequestBody Company request) {
+        log.info("Post request received. Ticker: {}", request.getTicker());
         String ticker = request.getTicker();
         if (ObjectUtils.isEmpty(ticker)) {
             throw new RuntimeException("ticker is empty");
@@ -75,6 +78,7 @@ public class CompanyController {
         
         Company company = companyService.save(ticker);
         companyService.addAutocompleteKeyword(company.getName());
+        log.info("Post request success. Ticker: {}", request.getTicker());
         return ResponseEntity.ok(company);
     }
     
@@ -87,8 +91,10 @@ public class CompanyController {
     @DeleteMapping("/{ticker}")
     @PreAuthorize("hasRole('WRITE')")
     public ResponseEntity<?> deleteCompany(@PathVariable String ticker) {
+        log.info("Delete request received. Ticker: {}", ticker);
         String companyName = companyService.deleteCompany(ticker);
         clearFinanceCache(companyName);
+        log.info("Delete request success. Ticker: {}", ticker);
         
         return ResponseEntity.ok(companyName);
     }
@@ -101,6 +107,7 @@ public class CompanyController {
     @PreAuthorize("hasRole('READ')")
     public ResponseEntity<?> searchCompany(final Pageable pageable) {
         Page<CompanyEntity> allCompany = companyService.getAllCompany(pageable);
+        
         return ResponseEntity.ok(allCompany);
     }
 }

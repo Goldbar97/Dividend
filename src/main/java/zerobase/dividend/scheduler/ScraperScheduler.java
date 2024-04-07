@@ -15,6 +15,7 @@ import zerobase.dividend.repository.DividendRepository;
 import zerobase.dividend.scraper.YahooFinanceScraper;
 import zerobase.dividend.type.CacheKey;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,7 +23,7 @@ import java.util.List;
 @EnableCaching
 @Slf4j
 public class ScraperScheduler {
-  
+    
     private final CompanyRepository companyRepository;
     private final YahooFinanceScraper yahooFinanceScraper;
     private final DividendRepository dividendRepository;
@@ -30,6 +31,11 @@ public class ScraperScheduler {
     @CacheEvict(value = CacheKey.KEY_FINANCE, allEntries = true)
     @Scheduled(cron = "${scheduler.scrap.yahoo}")
     public void yahooFinanceScheduling() {
+        
+        log.info(
+                "Scheduled yahooFinanceScheduling starts at {}",
+                LocalTime.now());
+        
         // 저장된 회사 목록 조회
         List<CompanyEntity> companies = companyRepository.findAll();
         
@@ -60,5 +66,9 @@ public class ScraperScheduler {
                 Thread.currentThread().interrupt();
             }
         }
+        
+        log.info(
+                "Scheduled yahooFinanceScheduling ends at {}",
+                LocalTime.now());
     }
 }

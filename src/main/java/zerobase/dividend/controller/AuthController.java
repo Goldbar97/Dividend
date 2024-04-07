@@ -23,7 +23,10 @@ public class AuthController {
     // 회원가입을 위한 API
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Auth.SignUp request) {
+        log.info(
+                "Signup request received. Username: {}", request.getUsername());
         MemberEntity registered = memberService.register(request);
+        log.info("Signup request success. Username: {}", request.getUsername());
         return ResponseEntity.ok(registered);
     }
     
@@ -31,8 +34,11 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody Auth.SignIn request) {
         MemberEntity memberEntity = memberService.authenticate(request);
+        log.info(
+                "Signin request received. Username: {}", request.getUsername());
         String token = tokenProvider.generateToken(
                 memberEntity.getUsername(), memberEntity.getRoles());
+        log.info("Signin request success. Username: {}", request.getUsername());
         
         return ResponseEntity.ok(token);
     }
